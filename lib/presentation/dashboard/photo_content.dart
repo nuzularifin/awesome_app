@@ -4,7 +4,7 @@ import 'package:flutter_awesome_app/presentation/bloc/photo_bloc.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_event.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_state.dart';
 import 'package:flutter_awesome_app/presentation/dashboard/book_card.dart';
-import 'package:flutter_awesome_app/presentation/detail_page.dart';
+import 'package:flutter_awesome_app/presentation/detail/detail_page_screen.dart';
 import 'package:flutter_awesome_app/presentation/shared/card_shimmer_placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -150,5 +150,5 @@ class PhotoContent extends StatelessWidget {
 
 void openDetailPage(Photo photo, context) {
   Navigator.push(context,
-      MaterialPageRoute(builder: (context) => DetailPage(photo: photo)));
+      MaterialPageRoute(builder: (context) => DetailPageScreen(photo: photo)));
 }

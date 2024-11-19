@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_awesome_app/domain/entities/photo.dart';
 import 'package:flutter_awesome_app/themes/app_text_styles.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPageScreen extends StatelessWidget {
   final Photo photo;
 
-  const DetailPage({super.key, required this.photo});
+  const DetailPageScreen({super.key, required this.photo});
 
   @override
   Widget build(BuildContext context) {

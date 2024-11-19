@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_bloc.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_event.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_state.dart';
-import 'package:flutter_awesome_app/presentation/detail_page.dart';
+import 'package:flutter_awesome_app/presentation/detail/detail_page_screen.dart';
 import 'package:flutter_awesome_app/presentation/dashboard/photo_content.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_awesome_app/core/service_locator.dart' as di;
