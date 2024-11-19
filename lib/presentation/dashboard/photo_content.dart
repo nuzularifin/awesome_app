@@ -49,7 +49,7 @@ class PhotoContent extends StatelessWidget {
                 itemBuilder: (context, index) {
                   if (index < state.photos.length) {
                     return Container(
-                      height: 200,
+                      height: 175,
                       child: BookCard(
                         photo: state.photos[index],
                         onClick: () {
@@ -59,7 +59,7 @@ class PhotoContent extends StatelessWidget {
                     );
                   } else {
                     return CardShimmerPlaceHolder(
-                      height: 200,
+                      height: 125,
                       width: MediaQuery.of(context).size.width,
                     );
                   }

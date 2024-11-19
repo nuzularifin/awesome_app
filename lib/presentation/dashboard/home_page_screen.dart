@@ -52,8 +52,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
               builder: (context, state) {
                 return IconButton(
                   icon: Icon(state.style == PhotoListStyle.list
-                      ? Icons.grid_view
-                      : Icons.list),
+                      ? Icons.list
+                      : Icons.grid_view),
                   onPressed: () => _photoBloc.add(ToogleListStyleEvent()),
                 );
               },
@@ -61,6 +61,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ],
         ),
         body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
