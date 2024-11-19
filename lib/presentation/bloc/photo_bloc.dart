@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_awesome_app/domain/entities/photo.dart';
 import 'package:flutter_awesome_app/domain/usecase/get_photo_list.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_event.dart';
 import 'package:flutter_awesome_app/presentation/bloc/photo_state.dart';
+import 'package:flutter_awesome_app/utils/dio_exception_handler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
@@ -29,7 +31,12 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         emit(PhotoListSuccess(photos: _photos));
       }
     } catch (e) {
-      emit(PhotoListError(message: 'Failed cause $e'));
+      if (e is DioException) {
+        String message = DioExceptionHandler.handleError(e);
+        emit(PhotoListError(message: 'Failed cause: $message'));
+      } else {
+        emit(PhotoListError(message: 'Failed cause $e'));
+      }
     }
   }
 
@@ -93,7 +100,12 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         emit(PhotoListSuccess(photos: _photos, style: state.style));
       }
     } catch (e) {
-      emit(PhotoListError(message: 'Failed cause $e'));
+      if (e is DioException) {
+        String message = DioExceptionHandler.handleError(e);
+        emit(PhotoListError(message: 'Failed cause: $message'));
+      } else {
+        emit(PhotoListError(message: 'Failed cause $e'));
+      }
     }
   }
 }

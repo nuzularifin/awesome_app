@@ -6,7 +6,7 @@ import 'package:flutter_awesome_app/themes/app_text_styles.dart';
 class DetailPage extends StatelessWidget {
   final Photo photo;
 
-  DetailPage({required this.photo});
+  const DetailPage({super.key, required this.photo});
 
   @override
   Widget build(BuildContext context) {
