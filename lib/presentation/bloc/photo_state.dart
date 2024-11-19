@@ -16,10 +16,19 @@ class PhotoListInitial extends PhotoState {}
 
 class PhotoListLoading extends PhotoState {}
 
+class PhotoListRefreshing extends PhotoState {
+  final DateTime timeStamp;
+
+  PhotoListRefreshing() : timeStamp = DateTime.now();
+
+  @override
+  List<Object?> get props => [timeStamp];
+}
+
 class PhotoListSuccess extends PhotoState {
   final List<Photo> photos;
   bool hasReachedMax = false;
-  final PhotoListStyle style;
+  PhotoListStyle style;
 
   PhotoListSuccess(
       {required this.photos,

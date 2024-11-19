@@ -14,7 +14,6 @@ class BookCard extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        height: 200,
         width: width * 0.5,
         child: Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -29,7 +28,7 @@ class BookCard extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 child: Image.network(
-                  photo.src?.original ?? '',
+                  photo.src?.medium ?? '',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
@@ -59,7 +58,7 @@ class BookCard extends StatelessWidget {
                         Text(
                           '${photo.alt}',
                           style: const TextStyle(
-                            fontSize: 12.0,
+                            fontSize: 16.0,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -71,7 +70,7 @@ class BookCard extends StatelessWidget {
                         Text(
                           '${photo.photographer}',
                           style: const TextStyle(
-                            fontSize: 10.0,
+                            fontSize: 12.0,
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
                           ),

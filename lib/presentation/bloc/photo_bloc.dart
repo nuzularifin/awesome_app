@@ -12,7 +12,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   PhotoBloc(this.getPhotoList) : super(PhotoListInitial()) {
     on<FetchPhotoList>(_onGetPhotoList);
     on<FetchPhotoListMore>(_onGetPhotoListMore);
-    on<ToogleListStyleEvent>(_onGetToogleListStyleEvent); //
+    on<ToogleListStyleEvent>(_onGetToogleListStyleEvent);
+    on<RefreshFetchPhotoList>(_onRefreshFetchPhotoList);
   }
 
   Future<void> _onGetPhotoList(
@@ -43,14 +44,10 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         final result = await getPhotoList.exec(currentPage);
         if (result.isEmpty) {
           emit(currentState.copyWith(
-            photos: currentState.photos,
-            hasReachedMax: true,
-          ));
+              photos: currentState.photos, hasReachedMax: true));
         } else {
           emit(currentState.copyWith(
-            photos: currentState.photos + result,
-            hasReachedMax: false,
-          ));
+              photos: currentState.photos + result, hasReachedMax: false));
         }
       } catch (e) {
         emit(PhotoListError(message: 'Failed cause $e'));
@@ -69,6 +66,30 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
             ? PhotoListStyle.grid
             : PhotoListStyle.list,
       ));
+    }
+  }
+
+  Future<void> _onRefreshFetchPhotoList(
+      RefreshFetchPhotoList event, Emitter<PhotoState> emit) async {
+    if (state is PhotoListSuccess) {
+      final currentState = state as PhotoListSuccess;
+
+      emit(PhotoListRefreshing());
+
+      try {
+        currentPage = 1;
+        _photos.clear();
+        final response = await getPhotoList.exec(currentPage);
+        _photos.addAll(response);
+        if (response.isEmpty) {
+          emit(PhotoListSuccess(
+              photos: _photos, hasReachedMax: true, style: currentState.style));
+        } else {
+          emit(PhotoListSuccess(photos: _photos, style: currentState.style));
+        }
+      } catch (e) {
+        emit(PhotoListError(message: 'Failed cause $e'));
+      }
     }
   }
 }

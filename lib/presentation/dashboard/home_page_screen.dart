@@ -70,9 +70,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
               ),
               Flexible(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 1,
-                  color: Colors.red,
-                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
                   child: PhotoContent(
                     scrollController: _scrollController,
                   ),
