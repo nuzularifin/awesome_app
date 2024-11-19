@@ -85,26 +85,51 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
 
   Future<void> _onRefreshFetchPhotoList(
       RefreshFetchPhotoList event, Emitter<PhotoState> emit) async {
-    emit(PhotoListRefreshing());
+    if (state is PhotoListSuccess) {
+      final currentState = state as PhotoListSuccess;
 
-    try {
-      currentPage = 1;
-      _photos.clear();
-      final response = await getPhotoList.exec(currentPage);
-      _photos.addAll(response);
+      emit(PhotoListRefreshing());
+      try {
+        currentPage = 1;
+        _photos.clear();
+        final response = await getPhotoList.exec(currentPage);
+        _photos.addAll(response);
 
-      if (response.isEmpty) {
-        emit(PhotoListSuccess(
-            photos: _photos, hasReachedMax: true, style: state.style));
-      } else {
-        emit(PhotoListSuccess(photos: _photos, style: state.style));
+        if (response.isEmpty) {
+          emit(PhotoListSuccess(
+              photos: _photos, hasReachedMax: true, style: currentState.style));
+        } else {
+          emit(PhotoListSuccess(photos: _photos, style: currentState.style));
+        }
+      } catch (e) {
+        if (e is DioException) {
+          String message = DioExceptionHandler.handleError(e);
+          emit(PhotoListError(message: 'Failed cause: $message'));
+        } else {
+          emit(PhotoListError(message: 'Failed cause $e'));
+        }
       }
-    } catch (e) {
-      if (e is DioException) {
-        String message = DioExceptionHandler.handleError(e);
-        emit(PhotoListError(message: 'Failed cause: $message'));
-      } else {
-        emit(PhotoListError(message: 'Failed cause $e'));
+    } else if (state is PhotoListError) {
+      emit(PhotoListRefreshing());
+      try {
+        currentPage = 1;
+        _photos.clear();
+        final response = await getPhotoList.exec(currentPage);
+        _photos.addAll(response);
+
+        if (response.isEmpty) {
+          emit(PhotoListSuccess(
+              photos: _photos, hasReachedMax: true, style: state.style));
+        } else {
+          emit(PhotoListSuccess(photos: _photos, style: state.style));
+        }
+      } catch (e) {
+        if (e is DioException) {
+          String message = DioExceptionHandler.handleError(e);
+          emit(PhotoListError(message: 'Failed cause: $message'));
+        } else {
+          emit(PhotoListError(message: 'Failed cause $e'));
+        }
       }
     }
   }
