@@ -29,32 +29,45 @@ class PhotoListSuccess extends PhotoState {
   final List<Photo> photos;
   bool hasReachedMax = false;
   PhotoListStyle style;
+  bool hasLoadingMore = true;
 
   PhotoListSuccess(
       {required this.photos,
       this.hasReachedMax = false,
-      this.style = PhotoListStyle.list});
+      this.style = PhotoListStyle.list,
+      this.hasLoadingMore = true});
 
   PhotoListSuccess copyWith({
     List<Photo>? photos,
     bool? hasReachedMax,
     PhotoListStyle? style,
+    bool? hasLoadingMore,
   }) {
     return PhotoListSuccess(
       photos: photos ?? this.photos,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       style: style ?? this.style,
+      hasLoadingMore: hasLoadingMore ?? this.hasLoadingMore,
     );
   }
 
   @override
-  List<Object?> get props => [photos, style];
+  List<Object?> get props => [photos, style, hasLoadingMore];
 }
 
 class PhotoListError extends PhotoState {
   final String message;
 
   PhotoListError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class PhotoListMoreError extends PhotoState {
+  final String message;
+
+  PhotoListMoreError({required this.message});
 
   @override
   List<Object?> get props => [message];

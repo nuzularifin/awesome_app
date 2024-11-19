@@ -44,13 +44,20 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         final result = await getPhotoList.exec(currentPage);
         if (result.isEmpty) {
           emit(currentState.copyWith(
-              photos: currentState.photos, hasReachedMax: true));
+              photos: currentState.photos,
+              hasReachedMax: true,
+              hasLoadingMore: false));
         } else {
           emit(currentState.copyWith(
-              photos: currentState.photos + result, hasReachedMax: false));
+              photos: currentState.photos + result,
+              hasReachedMax: false,
+              hasLoadingMore: true));
         }
       } catch (e) {
-        emit(PhotoListError(message: 'Failed cause $e'));
+        emit(currentState.copyWith(
+            photos: currentState.photos,
+            hasReachedMax: false,
+            hasLoadingMore: false));
       }
     }
   }
@@ -71,25 +78,22 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
 
   Future<void> _onRefreshFetchPhotoList(
       RefreshFetchPhotoList event, Emitter<PhotoState> emit) async {
-    if (state is PhotoListSuccess) {
-      final currentState = state as PhotoListSuccess;
+    emit(PhotoListRefreshing());
 
-      emit(PhotoListRefreshing());
+    try {
+      currentPage = 1;
+      _photos.clear();
+      final response = await getPhotoList.exec(currentPage);
+      _photos.addAll(response);
 
-      try {
-        currentPage = 1;
-        _photos.clear();
-        final response = await getPhotoList.exec(currentPage);
-        _photos.addAll(response);
-        if (response.isEmpty) {
-          emit(PhotoListSuccess(
-              photos: _photos, hasReachedMax: true, style: currentState.style));
-        } else {
-          emit(PhotoListSuccess(photos: _photos, style: currentState.style));
-        }
-      } catch (e) {
-        emit(PhotoListError(message: 'Failed cause $e'));
+      if (response.isEmpty) {
+        emit(PhotoListSuccess(
+            photos: _photos, hasReachedMax: true, style: state.style));
+      } else {
+        emit(PhotoListSuccess(photos: _photos, style: state.style));
       }
+    } catch (e) {
+      emit(PhotoListError(message: 'Failed cause $e'));
     }
   }
 }
