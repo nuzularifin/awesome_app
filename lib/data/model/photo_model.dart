@@ -38,7 +38,7 @@ class PhotoModel extends Photo {
           ? json['photographerUrl'].toString()
           : '',
       photographerId: json['photographer_id'] as int,
-      avgColor: json['avg_color'] as String ?? "none",
+      avgColor: json['avg_color'] as String,
       src: json['src'] != null ? Src.fromJson(json['src']) : null,
       liked: json['liked'] as bool,
       alt: json['alt'] as String,
