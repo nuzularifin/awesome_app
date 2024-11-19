@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_app/domain/entities/photo.dart';
+import 'package:flutter_awesome_app/themes/app_text_styles.dart';
 
 class DetailPage extends StatelessWidget {
   final Photo photo;
@@ -80,43 +81,32 @@ class DetailPage extends StatelessWidget {
                 width: 12.0,
               ),
               Text(
+                'Alt:',
+                style: AppTextStyles.labelblacknormal12,
+              ),
+              Text(
                 '${photo.alt}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.0,
-                ),
+                style: AppTextStyles.labelblackbold16,
               ),
               SizedBox(
                 height: 12.0,
               ),
               Text(
                 'Photographer',
-                style: TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12.0,
-                ),
+                style: AppTextStyles.labelblacknormal12,
               ),
               Text(
                 '${photo.photographer}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
+                style: AppTextStyles.labelblackbold16,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 12),
               Text(
-                'URL :',
-                style: TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12.0,
-                ),
+                'Resource:',
+                style: AppTextStyles.labelblacknormal12,
               ),
               Text(
                 '${photo.url}',
-                style: TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
+                style: AppTextStyles.labelblackbold12,
               ),
             ],
           ),

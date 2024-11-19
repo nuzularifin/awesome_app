@@ -1,7 +1,6 @@
 import 'package:flutter_awesome_app/core/api_provider.dart';
 import 'package:flutter_awesome_app/core/base_response.dart';
 import 'package:flutter_awesome_app/data/model/photo_model.dart';
-import 'package:flutter_awesome_app/domain/entities/photo.dart';
 
 class PhotoApiService extends ApiProvider {
   PhotoApiService(dio);

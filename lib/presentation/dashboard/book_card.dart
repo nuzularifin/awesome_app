@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_awesome_app/domain/entities/photo.dart';
+import 'package:flutter_awesome_app/themes/app_text_styles.dart';
 
 class BookCard extends StatelessWidget {
   final Photo photo;
@@ -57,11 +58,7 @@ class BookCard extends StatelessWidget {
                       children: [
                         Text(
                           '${photo.alt}',
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.labelwhitebold16,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
@@ -69,11 +66,7 @@ class BookCard extends StatelessWidget {
                         ),
                         Text(
                           '${photo.photographer}',
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          style: AppTextStyles.labelwhitebold12,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
